@@ -1,0 +1,16 @@
+{
+  "name": "Employ.me",
+  "version": "1.0.0",
+  "description": "Engineer's Thesis for Pomeranian Academy",
+  "main": "server.js",
+  "repository": "https://github.com/leokorrr/Employ.me.git",
+  "author": "leon <leokorrr@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "es6-promise": "^4.2.6",
+    "express": "^4.16.4",
+    "node-fetch": "^2.3.0",
+    "nodemon": "^1.18.11"
+  }
+}
