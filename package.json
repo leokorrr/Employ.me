@@ -7,11 +7,15 @@
   "author": "leon <leokorrr@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "body-parser": "^1.18.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "es6-promise": "^4.2.6",
     "expo-cli": "^2.14.0",
     "express": "^4.16.4",
+    "mongodb": "^3.2.3",
+    "mongoose": "^5.5.5",
     "node-fetch": "^2.3.0",
-    "nodemon": "^1.18.11"
-  }
+    "nodemon": "^1.19.0"
+  },
+  "proxy": "exp://6y-z2h.anonymous.client.exp.direct:80"
 }

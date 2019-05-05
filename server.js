@@ -1,18 +1,27 @@
+// Require packages
 const express = require('express');
 const bodyParser = require('body-parser');
-const routes = require('./routes/api');
+const cors = require('cors')
 const path = require('path');
+const mongoose = require('mongoose');
 
+// Setting up route const
+const routes = require('./routes/api');
+
+// Connecting to the DB
+mongoose.connect('mongodb://admin:admin123@ds261155.mlab.com:61155/jobs', { useNewUrlParser: true}, (err)=>{
+    if (err) throw err;
+    console.log('From app.js: database connected');
+})
+
+var db = mongoose.connection;
+
+// Initializing app
 const app = express();
 
 const PORT = 5000;
 
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
-
+app.use(cors());
 app.use(bodyParser.json());
 
 app.use('/api', routes);

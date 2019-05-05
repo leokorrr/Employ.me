@@ -1,16 +1,16 @@
 const express = require ('express');
 const router = express.Router();
 
-router.get('/freelancer', (req, res, next) => {
-    res.send('Data from Freelancer.com')
-});
+var Job = require('../models/job.model');
 
-router.get('/upwork', (req, res, next) => {
-    res.send('Data from UpWork.com')
-});
-
-router.post('/todos', (req, res, next) => {
-
-});
+router.get('/jobs', (req, res, next) => {
+    Job.find((err, jobs)=>{
+        if(err) {
+            console.log(err);
+        } else {
+            res.json(jobs)
+        }
+    })
+})
 
 module.exports = router;
