@@ -10,6 +10,9 @@ let Job = new Schema({
     },
     job_company: {
         type: String
+    },
+    job_description: {
+        type: String
     }
 })
 

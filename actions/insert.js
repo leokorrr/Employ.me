@@ -10,11 +10,12 @@ var db = mongoose.connection;
 
 var jobsCollection = db.collection('jobs');
 
-function insertJob(jobTitle, jobSalary, jobCompany){
+function insertJob(jobTitle, jobSalary, jobCompany, jobDescription){
     var job = new Job({
         job_title: jobTitle,
         job_salary: jobSalary,
-        job_company: jobCompany
+        job_company: jobCompany,
+        job_description: jobDescription
     })
 
     job.save((err)=>{
@@ -22,6 +23,10 @@ function insertJob(jobTitle, jobSalary, jobCompany){
         console.log(`New job ${jobTitle} was succesfully added`);
     })
 }
+var jobDesc = 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus beatae tenetur ipsa recusandae unde animi maiores tempora magnam aperiam consequuntur, obcaecati impedit odit ab fugit! Deserunt hic officiis consectetur minima.';
 
-insertJob('Student', 500, 'Pomeranian Academy');
-insertJob('Memes surfer', 3500, '9GAG');
+
+for(var i = 1; i <= 10; i++) {
+    var salary = Math.floor(Math.random() * 10000) + 1;  
+    insertJob(`Job ${i}`, salary, `Company ${i}`, jobDesc);
+}

@@ -5,7 +5,7 @@
                 <div class="job">
                     <div>
                         <h2 class="job__title">{{job.job_title}} - {{job.job_company}}</h2>
-                        <div class="job__description">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus beatae tenetur ipsa recusandae unde animi maiores tempora magnam aperiam consequuntur, obcaecati impedit odit ab fugit! Deserunt hic officiis consectetur minima.</div>
+                        <div class="job__description">{{job.job_description}}</div>
                     </div>
                     <div>
                         <div class="job__salary">{{job.job_salary}}$</div>
@@ -45,6 +45,7 @@ export default {
 .jobs-list{
     list-style: none;
     padding: 0;
+    margin-bottom: 0;
 
     &__item{
         display: flex;
@@ -60,6 +61,11 @@ export default {
     display: flex;
     transition: .2s;
     margin-bottom: 15px;
+    background-color: #fff;
+    border-bottom: 5px solid #185682;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    box-shadow: 0px 0px 15px #dddddd;
 
     &:first-of-type{
         margin-top: 15px;
@@ -68,6 +74,10 @@ export default {
     &__title{
         font-size: 24px;
         font-weight: bold;
+
+        &--full-view{
+            font-size: 28px;
+        }
     }
 
     &__description{
