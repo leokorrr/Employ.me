@@ -2,9 +2,9 @@
     <div class="job-full">
         <div class="job-full__main-info">
             <div>
-                <h1 class="job__title job__title--full-view">Job Title</h1>
-                <h3 class="job-full__salary">12000$</h3>
-                <div class="job-full__company"><span>Company:</span> CompanyName</div>
+                <h1 class="job__title job__title--full-view">{{job.job_title}}</h1>
+                <h3 class="job-full__salary">{{job.job_salary}}$</h3>
+                <div class="job-full__company"><span>Company:</span> {{job.job_company}}</div>
             </div>
             <div>
                 <button class="job-full__apply-btn">Apply</button>
@@ -12,39 +12,24 @@
         </div>
         <div class="job-full__desc">
             <h2 class="job-full__subheader">Description:</h2>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Beatae saepe eligendi deserunt ad facilis, asperiores eos,
-                corrupti modi distinctio facere laudantium nam delectus ipsa odio unde,
-                dolor consectetur a accusamus.</p>
+            <p>{{job.job_description}}</p>
         </div>
         <div class="job-full__requirements">
             <h2 class="job-full__subheader">Requirements:</h2>
             <ul class="job-full__skills-list">
-                <li class="job-full__skills-list-item">Javascript</li>
-                <li class="job-full__skills-list-item">c++</li>
-                <li class="job-full__skills-list-item">angular</li>
-                <li class="job-full__skills-list-item">crocodile</li>
+                <li class="job-full__skills-list-item" v-for="(requirements, index) in job.job_requirements" v-bind:key="index">{{requirements}}</li>
             </ul>
         </div>
         <div class="job-full__benefits">
             <h2 class="job-full__subheader">Benefits:</h2>
             <ul>
-                <li><i class="fa fa-check-square" aria-hidden="true"></i> office</li>
-                <li><i class="fa fa-check-square" aria-hidden="true"></i> salary</li>
-                <li><i class="fa fa-check-square" aria-hidden="true"></i> everything</li>
+                <li v-for="(benefit, index) in job.job_benefits" v-bind:key="index"><i class="fa fa-check-square" aria-hidden="true"></i> {{benefit}}</li>
             </ul>
         </div>
         <div class="job-full__company">
             <h2 class="job-full__subheader">About company:</h2>
             <ul>
-                <li><i class="fa fa-smile-o" aria-hidden="true"></i> Unit Tests </li>
-                <li><i class="fa fa-smile-o" aria-hidden="true"></i> Testers </li>
-                <li><i class="fa fa-smile-o" aria-hidden="true"></i> Agile management </li>
-                <li><i class="fa fa-frown-o" aria-hidden="true"></i> Issue tracking tool </li>
-                <li><i class="fa fa-smile-o" aria-hidden="true"></i> Knowledge repository </li>
-                <li><i class="fa fa-frown-o" aria-hidden="true"></i> Code reviews </li>
-                <li><i class="fa fa-frown-o" aria-hidden="true"></i> Version control system </li>
-                <li><i class="fa fa-smile-o" aria-hidden="true"></i> Build server </li>
+                <li v-for="(isDevTool, index) in job.job_about_company" v-bind:key="index"><i class="fa" :class="{'fa-smile-o': isDevTool, 'fa-frown-o': !isDevTool}" aria-hidden="true"></i> DevTool {{index + 1}} </li>
             </ul>
 
         </div>
@@ -57,13 +42,32 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     name: 'job',
-    props: {
-        jobTitle: String,
-        jobCompany: String,
-        jobDesc: String,
-        jobSalary: String
+    data () {
+        return {
+            jobs: [],
+            apiLink: 'http://localhost:5000/api/jobs',
+            job: [],
+            hasAbout: false
+        }
+    },
+    created () {
+        axios.get(this.apiLink)
+            .then(response => {
+                this.jobs = response.data
+                this.job = this.jobs[this.$route.params.jobId];
+            })
+            .catch(error => {
+                alert(error);
+            })
+    },
+    methods: {
+        isFirmHasDevelopmentTool () {
+            this.job.job_about_company
+        }
     }
 }
 </script>

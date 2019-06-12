@@ -1,7 +1,7 @@
 <template>
     <ul v-if="jobs && jobs.length" class="jobs-list">
-        <li v-for="job of jobs" v-bind:key="job.id" class="jobs-list__item">
-            <a href="#" class="job-link">
+        <li v-for="(job, index) of jobs" v-bind:key="job.id" class="jobs-list__item">
+            <router-link :to="{name: 'job', params: { jobId : index}}"  class="job-link">
                 <div class="job">
                     <div>
                         <h2 class="job__title">{{job.job_title}} - {{job.job_company}}</h2>
@@ -11,7 +11,7 @@
                         <div class="job__salary">{{job.job_salary}}$</div>
                     </div>
                 </div>
-            </a>
+            </router-link>
         </li>
     </ul>
 </template>
@@ -32,10 +32,8 @@ export default {
                 this.jobs = response.data
             })
             .catch(error => {
-                console.log(error);
+                alert(error);
             })
-    },
-    methods: {
     }
 }
 </script>

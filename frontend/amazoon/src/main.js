@@ -9,8 +9,9 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/job',
+    path: '/job/:jobId',
     component: Job,
+    name: 'job'
   },
   {
     path: '/',
@@ -19,7 +20,8 @@ const routes = [
 ];
 
 const router = new VueRouter({
-  routes
+  routes,
+  mode: 'history'
 })
 
 new Vue({

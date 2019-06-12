@@ -1,6 +1,6 @@
 <template>
     <nav class="navbar navbar-light menu">
-        <a class="navbar-brand" href="#">Amazoon Careers</a>
+        <router-link to="/" class="navbar-brand">Amazoon Careers</router-link>
     </nav>
 </template>
 
@@ -15,6 +15,18 @@
             transition: .2s;
 
             &:hover{
+                color: darken($color: white, $amount: 15%)
+            }
+
+            &:focus {
+                color: darken($color: white, $amount: 15%);
+
+                &:active {
+                    color: darken($color: white, $amount: 15%)
+                }
+            }
+
+            &:active {
                 color: darken($color: white, $amount: 15%)
             }
         }
