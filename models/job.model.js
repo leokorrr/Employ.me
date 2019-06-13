@@ -13,6 +13,15 @@ let Job = new Schema({
     },
     job_description: {
         type: String
+    },
+    job_benefits: {
+        type: Array
+    },
+    job_about_company: {
+        type: Array
+    },
+    job_requirements: {
+        type: Array
     }
 })
 

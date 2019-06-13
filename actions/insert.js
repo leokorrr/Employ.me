@@ -9,13 +9,49 @@ mongoose.connect('mongodb://admin:admin123@ds261155.mlab.com:61155/jobs', { useN
 var db = mongoose.connection;
 
 var jobsCollection = db.collection('jobs');
+var jobBenefits = [];
+var jobAboutCompany = [];
+var jobRequirements = [];
 
-function insertJob(jobTitle, jobSalary, jobCompany, jobDescription){
+function generateRandomBenefits (count) {
+    for (var i = 1; i <= count; i++) {
+        jobBenefits.push(`Lorem benefit ${i}`);
+    }
+
+    return jobBenefits;
+}
+
+function generateRandomRequirements (count) {
+    for (var i = 1; i <= count; i++) {
+        jobRequirements.push(`Requirement ${i}`);
+    }
+
+    return jobRequirements;
+}
+
+function generateRandomAboutCompany () {
+    for (var i = 0; i <= 7; i++) {
+        if(Math.round(Math.random()) > 0) {
+            var param = true
+        } else {
+            var param = false
+        }
+
+        jobAboutCompany.push(param)
+    }
+    
+    return jobAboutCompany
+}
+
+function insertJob(jobTitle, jobSalary, jobCompany, jobDescription, jobBenefits, jobAboutCompany, jobRequirements){
     var job = new Job({
         job_title: jobTitle,
         job_salary: jobSalary,
         job_company: jobCompany,
-        job_description: jobDescription
+        job_description: jobDescription,
+        job_benefits: jobBenefits,
+        job_about_company: jobAboutCompany,
+        job_requirements: jobRequirements
     })
 
     job.save((err)=>{
@@ -27,6 +63,14 @@ var jobDesc = 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusam
 
 
 for(var i = 1; i <= 10; i++) {
-    var salary = Math.floor(Math.random() * 10000) + 1;  
-    insertJob(`Job ${i}`, salary, `Company ${i}`, jobDesc);
+    var salary = Math.floor(Math.random() * 10000) + 1;
+    jobBenefits = [];  
+    generateRandomBenefits(Math.floor(Math.random() * 10) + 1)
+    jobRequirements = [];
+    generateRandomRequirements(Math.floor(Math.random() * 10) + 1)
+    jobAboutCompany = [];
+    generateRandomAboutCompany();
+    insertJob(`Job ${i}`, salary, `Company ${i}`, jobDesc, jobBenefits, jobAboutCompany, jobRequirements);
 }
+
+
