@@ -7,8 +7,6 @@
 
 <script>
 import Menu from './components/Menu';
-import Jobs from './components/Jobs';
-import Job from './components/Job';
 
 export default {
   name: 'app',
