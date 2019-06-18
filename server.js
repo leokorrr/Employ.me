@@ -33,4 +33,6 @@ app.use((err, req, res, next) => {
 
 app.listen(PORT, () => {
     console.log(`Backend is running on :${PORT}`);
+    console.log(`To get data from frontend fetch \'http://localhost:5000/api/jobs\'`);
+    console.log(`To get data from react-native app fetch \'http://192.168.1.102:5000/api/jobs\' (change 192... to your Ipv4)`)
 })

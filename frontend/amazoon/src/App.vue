@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Menu></Menu>
-    <router-view />
+    <Job></Job>
   </div>
 </template>
 
@@ -13,14 +13,12 @@ import Job from './components/Job';
 export default {
   name: 'app',
   components: {
-    Menu
+    Menu,
+    Jobs,
+    Job
   }
 }
 </script>
 
 <style lang="scss">
-#app{
-  background-color: #eee;
-  min-height: 100vh;
-}
 </style>
