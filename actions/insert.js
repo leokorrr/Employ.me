@@ -43,26 +43,29 @@ function generateRandomAboutCompany () {
     return jobAboutCompany
 }
 
-function insertJob(jobTitle, jobSalary, jobCompany, jobDescription, jobBenefits, jobAboutCompany, jobRequirements){
-    var job = new Job({
-        job_title: jobTitle,
-        job_salary: jobSalary,
-        job_company: jobCompany,
-        job_description: jobDescription,
-        job_benefits: jobBenefits,
-        job_about_company: jobAboutCompany,
-        job_requirements: jobRequirements
-    })
-
-    job.save((err)=>{
-        if (err) throw err;
-        console.log(`New job ${jobTitle} was succesfully added`);
-    })
+function insertJob(jobTitle, jobSalary, jobCompany, jobDescription, jobBenefits, jobAboutCompany, jobRequirements, jobLink){
+        var job = new Job({
+            job_title: jobTitle,
+            job_salary: jobSalary,
+            job_company: jobCompany,
+            job_description: jobDescription,
+            job_benefits: jobBenefits,
+            job_about_company: jobAboutCompany,
+            job_requirements: jobRequirements,
+            job_link: jobLink
+        })
+    
+        job.save((err)=>{
+            if (err) throw err;
+            console.log(`New job ${jobTitle} was succesfully added`);
+        })
 }
 var jobDesc = 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus beatae tenetur ipsa recusandae unde animi maiores tempora magnam aperiam consequuntur, obcaecati impedit odit ab fugit! Deserunt hic officiis consectetur minima.';
 
+var i = 0;                     
 
-for(var i = 1; i <= 10; i++) {
+function myLoop () {           
+   setTimeout(function () {    
     var salary = Math.floor(Math.random() * 10000) + 1;
     jobBenefits = [];  
     generateRandomBenefits(Math.floor(Math.random() * 10) + 1)
@@ -70,7 +73,14 @@ for(var i = 1; i <= 10; i++) {
     generateRandomRequirements(Math.floor(Math.random() * 10) + 1)
     jobAboutCompany = [];
     generateRandomAboutCompany();
-    insertJob(`Job ${i}`, salary, `Company ${i}`, jobDesc, jobBenefits, jobAboutCompany, jobRequirements);
+    
+
+    insertJob(`Job ${i}`, salary, `Company ${i}`, jobDesc, jobBenefits, jobAboutCompany, jobRequirements, `/job/${i}`);         
+    i++;                     
+    if (i < 30) {            
+        myLoop();             
+    }                        
+   }, 1000)
 }
 
-
+myLoop();  

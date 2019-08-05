@@ -39,24 +39,25 @@ export default {
             jobs: [],
             apiLink: 'http://localhost:5000/api/jobs',
             fetchedJobs: [],
-            filters: this.$route.params.filters
+            // filters: this.$route.params.filters,
+            searchJob: this.$route.params.searchJob
         }
     },
     created() {
-        if((this.filters.filterByTitle || this.filters.filterBySalary ) === undefined) {
-            this.$router.push('/') 
-        }
+        // if((this.filters.filterByTitle || this.filters.filterBySalary ) === undefined) {
+        //     this.$router.push('/') 
+        // }
         axios.get(this.apiLink)
             .then(response => {
                 this.fetchedJobs = response.data;
+                this.fetchedJobs.filter(this.findJobs);
+                // if (this.filters.filterBySalary) {
+                //     this.fetchedJobs.sort(this.compareSalary)
+                // }
 
-                if (this.filters.filterBySalary) {
-                    this.fetchedJobs.sort(this.compareSalary)
-                }
-
-                if(this.filters.filterByTitle) {
-                    this.fetchedJobs.sort(this.compareTitles)
-                }
+                // if(this.filters.filterByTitle) {
+                //     this.fetchedJobs.sort(this.compareTitles)
+                // }
 
             })
             .catch(error => {
@@ -74,6 +75,10 @@ export default {
         money() {
             this.fetchedJobs.sort(this.compareSalary)
             this.filterByMoney = true
+        },
+        findJobs (a) {
+            const jobTitle = a.job_title;
+            return jobTitle.toLowerCase() == this.searchJob.toLowerCase();
         },
         compareSalary(a,b) {
             const salaryA = a.job_salary;

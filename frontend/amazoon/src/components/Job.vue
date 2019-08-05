@@ -76,13 +76,17 @@ export default {
     $color-main: #185682;
 
     .job-full{
-        width: 50%;
-        margin-left: 25%;
-        padding: 15px;
+        width: 100%;
+        padding-top: 15px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
 
         & > div{
             padding: 25px;
             margin-top: 30px;
+            width: 95%;
+            max-width: 1000px;
             border-bottom: 5px solid #185682;
             background-color: #fff;
             box-shadow: 0px 0px 15px #dddddd;

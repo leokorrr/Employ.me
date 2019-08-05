@@ -1,18 +1,27 @@
 <template>
     <div>
-        <div class="actions">
-            <div class="actions__search">
-                <input type="text" placeholder="Type dreamed work title...">
-                <router-link :to="{name: 'search-results', params: { filters: filters }}"><button class="actions__search-btn">Search</button></router-link>
+        <!-- <div class="actions">
+            <div>
+                <div class="actions__search">
+                    <input type="text" placeholder="Type dreamed work title..." class="search-input" v-model="searchJob">
+                     <div class="actions__filters actions__filters--mobile">
+                        <form>
+                            <span>Filters: </span>
+                            <input type="checkbox" name="salary-filter" id = "salary-filter" value="filter" @click="checkSalaryFilter"> by Salary
+                            <input type="checkbox" name="title-filter" id = "title-filter" value="filter" @click="checkTitleFilter"> by Title (A-Z)
+                        </form>
+                    </div>
+                    <router-link :to="{name: 'search-results', params: { filters: filters, searchJob: searchJob }}"><button class="actions__search-btn">Search</button></router-link>
+                </div>
+                <div class="actions__filters">
+                    <form>
+                        <span>Filters: </span>
+                        <input type="checkbox" name="salary-filter" id = "salary-filter" value="filter" @click="checkSalaryFilter"> by Salary
+                        <input type="checkbox" name="title-filter" id = "title-filter" value="filter" @click="checkTitleFilter"> by Title (A-Z)
+                    </form>
+                </div>
             </div>
-            <div class="actions__filters">
-                <form>
-                    <span>Filters: </span>
-                    <input type="checkbox" name="salary-filter" id = "salary-filter" value="filter" @click="checkSalaryFilter"> by Salary
-                    <input type="checkbox" name="title-filter" id = "title-filter" value="filter" @click="checkTitleFilter"> by Title (A-Z)
-                </form>
-            </div>
-        </div>
+        </div> -->
         <ul v-if="jobs && jobs.length" class="jobs-list">
             <li v-for="(job, index) of jobs" v-bind:key="index" class="jobs-list__item">
                 <router-link :to="{name: 'job', params: { jobId : index}}"  class="job-link">
@@ -43,15 +52,16 @@ export default {
     data() {
         return {
             jobs: [],
-            apiLink: 'http://localhost:5000/api/jobs',
+            apiLink: 'http://192.168.43.194:5000',
             fetchedJobs: [],
             filterBySalary: false,
             filterByTitle: false,
-            filters: {}
+            filters: {},
+            searchJob: ''
         }
     },
     created() {
-        axios.get(this.apiLink)
+        axios.get(`${this.apiLink}/api/jobs`)
             .then(response => {
                 this.fetchedJobs = response.data;
             })
@@ -101,18 +111,33 @@ export default {
     margin-top: 40px;
     margin-bottom: 20px;
 
+    &>div {
+        width: 95%;
+        max-width: 1000px;
+    }
+
     &__search {
         max-width: 1000px;
         width: 100%;
         display: flex;
         justify-content: space-between;
+        flex-wrap: wrap;
 
-        & input {
+        @media (max-width: 879px) {
+            justify-content: center;
+        }
+
+        & input.search-input {
             padding: 6px 15px;
             border-radius: 4px;
             border: 1px solid #185682;
             width: 85%;
             font-size: 24px;
+            
+            @media (max-width: 879px) {
+                width: 100%;
+            }
+
         }
     }
 
@@ -140,6 +165,13 @@ export default {
         max-width: 1000px;
         margin-top: 15px;
 
+        &--mobile {
+            display: none;
+            @media (max-width: 879px) {
+                display: flex !important;
+            }
+        }
+
         & form {
             display: flex;
             align-items: center;
@@ -155,6 +187,12 @@ export default {
                 width: 17px;
             }
         }
+
+        @media (max-width: 879px) {
+            display: none;
+        }
+
+        
     }
 
     &__search-btn {
@@ -164,6 +202,10 @@ export default {
         border-radius: 4px;
         padding: 9px 30px;
         font-size: 20px;
+
+        @media (max-width: 879px) {
+            margin-top: 20px;
+        }
     }
 }
 
@@ -171,6 +213,7 @@ export default {
     list-style: none;
     padding: 0;
     margin-bottom: 0;
+    margin-top: 15px;
 
     &__item{
         display: flex;
@@ -217,7 +260,7 @@ export default {
 
 .job-link{
     color: black;
-    width: 70%;
+    width: 95%;
     max-width: 1000px;
 
     &:hover{

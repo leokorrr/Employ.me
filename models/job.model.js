@@ -22,6 +22,9 @@ let Job = new Schema({
     },
     job_requirements: {
         type: Array
+    },
+    job_link: {
+        type: String
     }
 })
 
