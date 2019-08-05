@@ -19,5 +19,8 @@
     "node-fetch": "^2.3.0",
     "nodemon": "^1.19.0"
   },
-  "proxy": "exp://6y-z2h.anonymous.client.exp.direct:80"
+  "proxy": "exp://6y-z2h.anonymous.client.exp.direct:80",
+  "devDependencies": {
+    "dotenv": "^8.0.0"
+  }
 }

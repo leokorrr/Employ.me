@@ -45,6 +45,8 @@
 import axios from 'axios';
 import Observer from './Observer'
 
+import { networkUrl } from '../../../../config'
+
 export default {
     components : {
         Observer
