@@ -45,7 +45,6 @@
 import axios from 'axios';
 import Observer from './Observer'
 
-import { networkUrl } from '../../../../config'
 
 export default {
     components : {
@@ -54,7 +53,7 @@ export default {
     data() {
         return {
             jobs: [],
-            apiLink: 'http://192.168.43.194:5000',
+            apiLink: process.env.VUE_APP_NETWORK_URL,
             fetchedJobs: [],
             filterBySalary: false,
             filterByTitle: false,
