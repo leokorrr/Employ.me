@@ -12,6 +12,7 @@ var jobsCollection = db.collection('jobs');
 var jobBenefits = [];
 var jobAboutCompany = [];
 var jobRequirements = [];
+let jobTitle;
 
 function generateRandomBenefits (count) {
     for (var i = 1; i <= count; i++) {
@@ -43,9 +44,33 @@ function generateRandomAboutCompany () {
     return jobAboutCompany
 }
 
-function insertJob(jobTitle, jobSalary, jobCompany, jobDescription, jobBenefits, jobAboutCompany, jobRequirements, jobLink){
+function generateRandomJobTitle () {
+    let index = Math.floor(Math.random() * 4 + 1);
+    
+    switch (index) {
+        case 1:
+            jobTitle = 'Frontend'
+            break;
+        case 2:
+            jobTitle = 'Backend'
+            break;
+        case 3:
+            jobTitle = 'Data security'
+            break;
+        case 4:
+            jobTitle = 'Java developer'
+            break;
+        default:
+            jobTitle = 'Manager'
+    }
+
+    return jobTitle
+}
+
+function insertJob(jobTitle, jobTag, jobSalary, jobCompany, jobDescription, jobBenefits, jobAboutCompany, jobRequirements, jobLink){
         var job = new Job({
             job_title: jobTitle,
+            job_tag: jobTag,
             job_salary: jobSalary,
             job_company: jobCompany,
             job_description: jobDescription,
@@ -67,6 +92,7 @@ var i = 0;
 function myLoop () {           
    setTimeout(function () {    
     var salary = Math.floor(Math.random() * 10000) + 1;
+    generateRandomJobTitle();
     jobBenefits = [];  
     generateRandomBenefits(Math.floor(Math.random() * 10) + 1)
     jobRequirements = [];
@@ -75,9 +101,9 @@ function myLoop () {
     generateRandomAboutCompany();
     
 
-    insertJob(`Job ${i}`, salary, `Company ${i}`, jobDesc, jobBenefits, jobAboutCompany, jobRequirements, `/job/${i}`);         
+    insertJob(jobTitle, jobTitle.toLowerCase(), salary, `Company ${i}`, jobDesc, jobBenefits, jobAboutCompany, jobRequirements, `/job/${i}`);         
     i++;                     
-    if (i < 30) {            
+    if (i < 100) {            
         myLoop();             
     }                        
    }, 1000)

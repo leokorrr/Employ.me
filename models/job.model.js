@@ -5,6 +5,9 @@ let Job = new Schema({
     job_title: {
         type: String
     },
+    job_tag: {
+        type: String
+    },
     job_salary: {
         type: Number
     },

@@ -1,27 +1,5 @@
 <template>
     <div>
-        <!-- <div class="actions">
-            <div>
-                <div class="actions__search">
-                    <input type="text" placeholder="Type dreamed work title..." class="search-input" v-model="searchJob">
-                     <div class="actions__filters actions__filters--mobile">
-                        <form>
-                            <span>Filters: </span>
-                            <input type="checkbox" name="salary-filter" id = "salary-filter" value="filter" @click="checkSalaryFilter"> by Salary
-                            <input type="checkbox" name="title-filter" id = "title-filter" value="filter" @click="checkTitleFilter"> by Title (A-Z)
-                        </form>
-                    </div>
-                    <router-link :to="{name: 'search-results', params: { filters: filters, searchJob: searchJob }}"><button class="actions__search-btn">Search</button></router-link>
-                </div>
-                <div class="actions__filters">
-                    <form>
-                        <span>Filters: </span>
-                        <input type="checkbox" name="salary-filter" id = "salary-filter" value="filter" @click="checkSalaryFilter"> by Salary
-                        <input type="checkbox" name="title-filter" id = "title-filter" value="filter" @click="checkTitleFilter"> by Title (A-Z)
-                    </form>
-                </div>
-            </div>
-        </div> -->
         <ul v-if="jobs && jobs.length" class="jobs-list">
             <li v-for="(job, index) of jobs" v-bind:key="index" class="jobs-list__item">
                 <router-link :to="{name: 'job', params: { jobId : index}}"  class="job-link">
@@ -37,6 +15,7 @@
                 </router-link>
             </li>
         </ul>
+        <div v-else>Loading...</div>
         <observer  v-on:intersect="intersected" />
     </div>
 </template>
@@ -47,6 +26,7 @@ import Observer from './Observer'
 
 
 export default {
+    name: 'Jobs',
     components : {
         Observer
     },
@@ -64,7 +44,7 @@ export default {
     created() {
         axios.get(`${this.apiLink}/api/jobs`)
             .then(response => {
-                this.fetchedJobs = response.data;
+                this.jobs = response.data;
             })
             .catch(error => {
                 alert(error);
@@ -77,28 +57,7 @@ export default {
             for (var i = this.jobs.length; i < jobsCount; i++) {
                 this.jobs.push(this.fetchedJobs[i])
             }
-        },
-        checkSalaryFilter() {
-            if (!this.filterBySalary) {
-                this.filterByTitle = false;
-                this.filterBySalary = true;
-                document.getElementById("title-filter").checked = false;
-                this.filters.filterBySalary = this.filterBySalary
-            } else {
-                this.filterBySalary = false;
-            }
-        },
-        checkTitleFilter() {
-            if (!this.filterByTitle) {
-                this.filterBySalary = false;
-                this.filterByTitle = true;
-                document.getElementById("salary-filter").checked = false;
-                this.filters.filterByTitle = this.filterByTitle
-            } else {
-                this.filterByTitle = false;
-            }
-        },
-    
+        }
     }
 }
 </script>

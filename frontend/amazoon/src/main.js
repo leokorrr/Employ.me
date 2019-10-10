@@ -3,6 +3,7 @@ import App from './App.vue'
 import VueRouter from 'vue-router';
 import Job from './components/Job.vue';
 import Jobs from './components/Jobs.vue';
+import Welcome from './components/Welcome'
 import SearchResults from './components/SearchResults.vue';
 
 Vue.config.productionTip = false
@@ -16,8 +17,13 @@ const routes = [
   },
   {
     path: '/',
-    component: Jobs,
+    component: Welcome,
     name: 'Home'
+  },
+  {
+    path: '/jobs',
+    component: Jobs,
+    name: 'Jobs'
   },
   {
     path: '/search-results/:filters',

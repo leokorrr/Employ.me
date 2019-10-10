@@ -4,7 +4,7 @@ import { AppLoading } from "expo";
 import { Container, Header, Content, Card, CardItem, Body, Text, Title } from 'native-base';
 
 import AppHeader from '../components/AppHeader';
-
+import { NETWORK_URL } from 'react-native-dotenv';
 
 
 export default class HomeScreen extends Component {
@@ -18,7 +18,7 @@ export default class HomeScreen extends Component {
             salaryFilter: params ? params.salaryFilter : null,
             titleFilter: params ? params.titleFilter : null,
             searchJobTitle: params ? params.searchJobTitle : null,
-            amazoonApiLink: 'http://192.168.1.103:5000',
+            amazoonApiLink: NETWORK_URL,
             findedJobs: []
         }
     }
