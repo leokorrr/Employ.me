@@ -1,3 +1,4 @@
+
 <template>
     <div class="welcome">
         <form method="POST" :action=route class="welcome-form">
@@ -5,7 +6,7 @@
                 <input type="text" name="jobTitle" value="" placeholder="Job title"/>
                 <input type="text" name="salary" value="" placeholder="Salary+">
                 <button type="button" class="welcome-form__filters-dropdown" @click="show = !show" :class="{open: show}">Filters</button>
-                <button type="submit" @click.stop.prevent="submit()">
+                <button type="submit" @click="submit()">
                    Find
                 </button>
             </div>
@@ -40,8 +41,9 @@ export default {
   },
   methods: {
       submit() {
-        
-        this.$router.push("/jobs")
+          setTimeout(() => {
+            this.$router.push("/jobs")
+          }, 100)
       }
   }
 }

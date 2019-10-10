@@ -88,9 +88,7 @@ router.get('/jobs', (req, res, next) => {
 })
 
 router.get('/tests', (req, res) => {
-    Job.find({}, (err, data) => {
-        
-    })
+    res.send('aaa')
 })
 
 module.exports = router;
