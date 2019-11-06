@@ -1,0 +1,257 @@
+<template>
+    <div class="job-full" v-if="loaded">
+        <div class="job-full__main-info">
+            <div>
+                <h1 class="job__title job__title--full-view">{{job.job_title}}</h1>
+                <div class="job-full__company"><span>Company:</span> {{job.job_company}}</div>
+                <div class="job-full__company"><span>Source:</span> {{job.job_source}}</div>
+            </div>
+            <div>
+                <!-- <button class="job-full__apply-btn">Apply</button> -->
+                <h3 class="job-full__salary">{{job.job_salary}}$</h3>
+            </div>
+        </div>
+        <div class="job-full__desc">
+            <h2 class="job-full__subheader">Description:</h2>
+            <p>{{job.job_description}}</p>
+        </div>
+        <div class="job-full__requirements">
+            <h2 class="job-full__subheader">Requirements:</h2>
+            <ul class="job-full__skills-list">
+                <li class="job-full__skills-list-item" v-for="(requirements, index) in job.job_requirements" v-bind:key="index">{{requirements}}</li>
+            </ul>
+        </div>
+        <div class="job-full__benefits">
+            <h2 class="job-full__subheader">Benefits:</h2>
+            <ul>
+                <li v-for="(benefit, index) in job.job_benefits" v-bind:key="index"><i class="fa fa-check-square" aria-hidden="true"></i> {{benefit}}</li>
+            </ul>
+        </div>
+        <div class="job-full__company">
+            <h2 class="job-full__subheader">About company:</h2>
+            <ul>
+                <li v-for="(isDevTool, index) in job.job_about_company" v-bind:key="index"><i class="fa" :class="{'fa-smile-o': isDevTool, 'fa-frown-o': !isDevTool}" aria-hidden="true"></i> DevTool {{index + 1}} </li>
+            </ul>
+        </div>
+        <div class="job-full__contact" style="margin-bottom: 30px">
+            <h2 class="job-full__subheader">Contact:</h2>
+            <p><b>Email:</b> {{job.job_email}}</p>
+            <p><b>Tel.</b> {{job.job_telephone}}</p>
+        </div>
+        <div style="display: none">
+            <!-- <div>
+                <button class="job-full__apply-btn">Apply</button>
+            </div> -->
+        </div>
+    </div>
+    <div v-else class="loader-box">
+        <div class="loader"></div>
+    </div>
+</template>
+
+<script>
+import axios from 'axios';
+
+export default {
+    name: 'job',
+    data () {
+        return {
+            jobs: [],
+            apiLink: process.env.VUE_APP_NETWORK_URL,
+            job: [],
+            hasAbout: false,
+            loaded: false
+        }
+    },
+    created () {
+        axios.get(`${this.apiLink}/api/jobs`)
+            .then(response => {
+                this.jobs = response.data
+                this.job = this.jobs.find(job => job._id === this.$route.params.jobId)
+                this.loaded = true
+            })
+            .catch(error => {
+                alert(error);
+            })
+    },
+    methods: {
+        isFirmHasDevelopmentTool () {
+            this.job.job_about_company
+        }
+    }
+}
+</script>
+
+<style lang="scss">
+    $color-main: #6c028a;
+
+    .job-full{
+        width: 100%;
+        padding-top: 15px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        & > div{
+            padding: 25px;
+            margin-top: 30px;
+            width: 95%;
+            max-width: 1000px;
+            border-bottom: 5px solid #6c028a;
+            background-color: #fff;
+            box-shadow: 0px 0px 15px #dddddd;
+
+            &:first-of-type{
+                box-shadow: none;
+                margin-top: 0;
+                border-radius: 0;
+                border-top-right-radius: 4px;
+                border-top-left-radius: 4px;
+            }
+
+            &:last-of-type{
+                border-bottom-left-radius: 4px;
+                border-bottom-right-radius: 4px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+        }
+
+        &__main-info{
+            display: flex;
+            justify-content: space-between;
+            // align-items: center;
+            padding: 10px;
+        }
+
+        &__salary{
+            font-size: 22px;
+        }
+
+        &__contact {
+            p {
+                margin-bottom: 5px;
+
+                &:first-of-type {
+                    margin-top: 10px;
+                }
+            }
+        }
+
+        &__apply-btn{
+            border: none;
+            background-color: $color-main;
+            padding: 14px 64px;
+            border-radius: 4px;
+            color: white;
+            transition: .25s;
+
+            &:hover{
+                box-shadow: 0 0 15px #8b8b8b;
+            }
+        }
+
+        &__company{
+            font-size: 16px;
+
+            & span {
+                color: #7D8795;
+            }
+        }
+
+        &__requirements{
+        }
+
+        &__benefits{
+            & ul {
+                padding: 0;
+                list-style: none;
+
+                & li {
+                    display: flex;
+                    font-size: 18px;
+                    align-items: center;
+
+                    & i {
+                        font-size: 20px;
+                        margin-right: 5px;
+                        color: lighten($color-main, 15%);
+                    }
+                }
+            }
+        }
+
+        &__subheader{
+            font-size: 22px;
+            text-transform: uppercase;
+        }
+
+        &__desc{
+            & p {
+                margin-bottom: 0;
+            }
+        }
+
+        &__skills-list{
+            padding: 0;
+            list-style-type: none;
+            display: flex;
+            margin-top: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 0;
+        }
+
+        &__skills-list-item{
+            background-color: lighten($color-main, 15%);
+            padding: 2px 6px;
+            margin-right: 10px;
+            border-radius: 4px;
+            color: white;
+            margin: 0 8px 10px 0;
+
+        }
+
+        &__company{
+            & ul {
+                padding: 0;
+                margin-bottom: 0;
+                list-style-type: none;
+
+                & li {
+                    font-size: 18px;
+
+                    & i {
+                        font-size: 20px;
+
+                        &.fa-frown-o {
+                            color: #e30808;
+                        }
+
+                        &.fa-smile-o {
+                            color:#00c900;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+.loader {
+    border: 10px solid #f3f3f3; 
+    border-top: 10px solid #6c028a;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+.loader-box {
+    width: 100%;
+    height: calc(100vh - 60px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+</style>

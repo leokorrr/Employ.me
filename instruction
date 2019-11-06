@@ -1,0 +1,63 @@
+Apka zostala zakodowana na systemie Ubuntu/Linux
+
+# Jak odpalic aplikacje:
+
+# Zainstalowac:
+- Node (https://tecadmin.net/install-latest-nodejs-npm-on-ubuntu/)
+- Expo `npm install expo-cli --global`
+- Yarn (https://linuxize.com/post/how-to-install-yarn-on-ubuntu-18-04/)
+- Expo app z Google Store
+
+# pdf - przejsc do foderu
+# ww - wywolac 
+
+# Na poczatku znajdujemy sie wewnatrz foldera Employ.me
+
+# Odpalamy strony z fake data:
+
+## Amazoon
+1. pdf services/
+2. pdf amazoon/
+3. ww `npm install`
+4. W pliku .env zmienic NETWORK_URL `http://192.168.8.102:7000/` na swoj lokalny IP wewnatrz sieci npsz `http://192.168.43.33:7000/`
+5. W pliku .env zmienic FRONTEND_URL `http://192.168.8.102:8081/` na swoj lokalny IP wewnatrz sieci npsz `http://192.168.43.33:8081/`
+4. ww `nodemon server.js`
+5. pdf frontend/
+8. W pliku .env zmienic VUE_APP_NETWORK_URL `http://192.168.8.102:7000/` na swoj lokalny IP wewnatrz sieci npsz `http://192.168.43.33:7000/`
+6. ww `yarn install`
+7. ww `yarn serve`
+
+## Gogle
+1. pdf services/
+2. pdf gogle/
+3. ww `npm install`
+4. W pliku .env zmienic NETWORK_URL `http://192.168.8.102:4000/` na swoj lokalny IP wewnatrz sieci npsz `http://192.168.43.33:4000/`
+5. W pliku .env zmienic FRONTEND_URL `http://192.168.8.102:8082/` na swoj lokalny IP wewnatrz sieci npsz `http://192.168.43.33:8082/`
+4. ww `nodemon server.js`
+5. pdf frontend/
+8. W pliku .env zmienic VUE_APP_NETWORK_URL `http://192.168.8.102:4000/` na swoj lokalny IP wewnatrz sieci npsz `http://192.168.43.33:4000/`
+6. ww `yarn install`
+7. ww `yarn serve`
+
+# Odpalamy strone Employ.me:
+1. pdf Employ.me/
+2. ww `npm install`
+3. W pliku .env zmienic NETWORK_URL `http://192.168.8.102:5000/` na swoj lokalny IP wewnatrz sieci npsz `http://192.168.43.33:5000/`
+4. W pliku .env zmienic FRONTEND_URL `http://192.168.8.102:8080/` na swoj lokalny IP wewnatrz sieci npsz `http://192.168.43.33:8080/`
+5. ww `nodemon server.js`
+6. pdf frontend/
+7. pdf employme/
+8. W pliku .env zmienic VUE_APP_NETWORK_URL `http://192.168.8.102:5000/` na swoj lokalny IP wewnatrz sieci npsz `http://192.168.43.33:5000/`
+9. ww `yarn install`
+10. ww `yarn serve`
+
+# Odpalamy natywna apke Employ.me
+1. pdf Employ.me/
+2. pdf client/
+3. ww `yarn install`
+4. pdf screens/
+5. W plikach Job.js i ResultsScreen.js zmienic employmeApiLink `http://192.168.8.102:5000/` na swoj lokalny IP wewnatrz sieci npsz `http://192.168.43.33:5000/`
+6. W pliku WelcomeScreen.js zmienic url (linijka 128) `http://192.168.8.102:5000/` na swoj lokalny IP wewnatrz sieci npsz `http://192.168.43.33:5000/`
+7. ww `expo start`
+8. zeskanowac w mobilnej apce Expo QR kod wyswietlony na ekranie 
+

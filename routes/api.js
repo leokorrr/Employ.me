@@ -7,6 +7,7 @@ const urlencodedParser = bodyParser.urlencoded({extended:false})
 let Job = require('../models/job.model');
 
 let filters;
+let filtersNative;
 
 router.post('/jobs', urlencodedParser,  (req, res, next) => {
     filters = req.body;
@@ -87,8 +88,77 @@ router.get('/jobs', (req, res, next) => {
     }
 })
 
-router.get('/tests', (req, res) => {
-    res.send('aaa')
+router.get('/native-jobs', (req, res) => {
+    if (filtersNative) {
+        let sortingNumber = filtersNative.salary;
+        let requirements = filtersNative.requirements;
+        console.log(filtersNative)
+        let dataObjTitles =[];
+        let dataObjSorted = [];
+        let dataObjFiltered = [];
+        let dataFiltered = [];
+
+
+        Job.find({}, (err, data) => {
+            if (err) {
+                return err
+            }
+
+            if (filtersNative.jobTitle !== '') {
+                for (let i = 0; i < data.length; i++) {
+                    if(data[i].job_tag.includes(filtersNative.jobTitle.toLowerCase())) {
+                        dataObjTitles.push(data[i])
+                    }
+                }
+            } else {
+                dataObjTitles = data
+            }
+
+            if (filtersNative.salary !== '') {
+                for (var i = 0; i < dataObjTitles.length; i++) {
+                    if(dataObjTitles[i].job_salary >= sortingNumber) {
+                        dataObjSorted.push(dataObjTitles[i])
+                    }
+                }
+            } else {
+                dataObjSorted = dataObjTitles;
+            }
+
+            if (requirements.length !== 0) {
+                for (var i = 0; i < dataObjSorted.length; i++) {
+                    let reqChecker = requirements.some(v => dataObjSorted[i].job_requirements.includes(v))
+                
+                    if (reqChecker) {
+                        dataObjFiltered.push(dataObjSorted[i])
+                    }
+                }
+            } else {
+                dataObjFiltered = dataObjSorted 
+            }
+
+            // if (dataObjFiltered.length <= dataObjSorted.length && filters.requirements) {
+            //     dataFiltered = dataObjFiltered
+            // } else {
+            //     dataFiltered = dataObjSorted
+            // }
+                
+            res.send(dataObjFiltered)
+                
+        })
+
+    } else {
+        Job.find({}, (err, data) => {
+            if (err) {
+                return err
+            } else {
+                res.send(data)
+            }
+        })
+    }
+})
+
+router.post('/native-jobs', (req, res) => {
+    filtersNative = req.body
 })
 
 module.exports = router;

@@ -1,10 +1,20 @@
 import React from 'react';
-import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { createAppContainer, createStackNavigator } from 'react-navigation';
 
-import MainTabNavigator from './MainTabNavigator';
+import ResultsScreen from '../screens/ResultsScreen';
+import WelcomeScreen from '../screens/WelcomeScreen'
+import Job from '../screens/Job';
 
-export default createAppContainer(createSwitchNavigator({
-  // You could add another route here for authentication.
-  // Read more at https://reactnavigation.org/docs/en/auth-flow.html
-  Main: MainTabNavigator,
-}));
+
+const AppNavigator = createStackNavigator(
+  {
+    Home: WelcomeScreen,
+    SearchResult: ResultsScreen,
+    Job: Job
+  },
+  {
+    initialRouteName: "Home"
+  }
+)
+
+export default createAppContainer(AppNavigator)

@@ -26,8 +26,17 @@ let Job = new Schema({
     job_requirements: {
         type: Array
     },
-    job_link: {
+    job_email: {
         type: String
+    },
+    job_telephone: {
+        type: String
+    },
+    job_source: {
+        type: String
+    },
+    job_sponsored: {
+        type: Boolean
     }
 })
 

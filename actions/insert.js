@@ -1,7 +1,7 @@
 var Job = require('../models/job.model');
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://admin:admin123@ds261155.mlab.com:61155/jobs', { useNewUrlParser: true}, (err)=>{
+mongoose.connect('mongodb://admin:admin12345@ds241968.mlab.com:41968/employme', { useNewUrlParser: true}, (err)=>{
     if (err) throw err;
     console.log('From insert.js: database connected');
 })
@@ -67,7 +67,7 @@ function generateRandomJobTitle () {
     return jobTitle
 }
 
-function insertJob(jobTitle, jobTag, jobSalary, jobCompany, jobDescription, jobBenefits, jobAboutCompany, jobRequirements, jobLink){
+function insertJob(jobTitle, jobTag, jobSalary, jobCompany, jobDescription, jobBenefits, jobAboutCompany, jobRequirements, jobSource, jobEmail, jobPhone, jobSponsore){
         var job = new Job({
             job_title: jobTitle,
             job_tag: jobTag,
@@ -77,7 +77,10 @@ function insertJob(jobTitle, jobTag, jobSalary, jobCompany, jobDescription, jobB
             job_benefits: jobBenefits,
             job_about_company: jobAboutCompany,
             job_requirements: jobRequirements,
-            job_link: jobLink
+            job_source: jobSource,
+            job_email: jobEmail,
+            job_telephone: jobPhone,
+            job_sponsored: jobSponsored
         })
     
         job.save((err)=>{
@@ -86,6 +89,10 @@ function insertJob(jobTitle, jobTag, jobSalary, jobCompany, jobDescription, jobB
         })
 }
 var jobDesc = 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus beatae tenetur ipsa recusandae unde animi maiores tempora magnam aperiam consequuntur, obcaecati impedit odit ab fugit! Deserunt hic officiis consectetur minima.';
+var jobSource = 'gogle.com';
+var jobEmail = 'sample@email.com';
+var jobPhone = '+48 YYYYYYYYYY';
+var jobSponsored = true;
 
 var i = 0;                     
 
@@ -101,9 +108,9 @@ function myLoop () {
     generateRandomAboutCompany();
     
 
-    insertJob(jobTitle, jobTitle.toLowerCase(), salary, `Company ${i}`, jobDesc, jobBenefits, jobAboutCompany, jobRequirements, `/job/${i}`);         
+    insertJob(jobTitle, jobTitle.toLowerCase(), salary, `Company ${i + Math.floor(Math.random() * 70) + 1}`, jobDesc, jobBenefits, jobAboutCompany, jobRequirements, jobSource, jobEmail, jobPhone, jobSponsored);         
     i++;                     
-    if (i < 100) {            
+    if (i < 3) {            
         myLoop();             
     }                        
    }, 1000)

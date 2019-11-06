@@ -1,15 +1,16 @@
-# add city and country
-# fix network error issue
+# Native App
+- Remove all filters
+- whole width btn
+- home screen btn
+- ograniczenie znakow
+- labels
+- PROD
+
+# Web
+
+- znaleziono x ofert
+- spiner?????
+- nothing was found, image
 
 
-# Filters :
-## what filters
-## data flow front/back 
-## filtering algorytms
-## filters UI
-
-# elastic search
-# infinite scrolling / pagination ?
-# Start screen vue 
-
-# add a lot testing data
+- Konkretne oferty

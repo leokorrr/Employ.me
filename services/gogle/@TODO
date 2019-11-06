@@ -1,0 +1,20 @@
+@TODO
+
+#BACKEND
+-Employ.me db
+-Amazoon db
+-Gogle db
+-Routes for every service
+
+#FRONTEND
+-Employ.me web service
+-Launching on different ports
+-Sponsor for Employ.me (badges + sponors on top)
+
+#NATIVE
+-Full job view +
+-Center spinner +
+-Filters + 
+-Sponsor for Employ.me (badges + sponors on top)
+-.env
+
