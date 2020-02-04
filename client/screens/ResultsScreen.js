@@ -15,7 +15,7 @@ export default class HomeScreen extends Component {
         this.state = {
             item: '',
             jobs: null,
-            employmeApiLink: 'http://192.168.43.194:5000',
+            employmeApiLink: 'http://192.168.8.102:5000',
             jobsList: null,
             sponsoredJobsList: null,
         }
@@ -76,7 +76,7 @@ export default class HomeScreen extends Component {
                         </View>
                       </View>
                       <View>
-                        <Text style={styles.location}>
+                        <Text style={styles.location} numberOfLines={3}>
                           {job.job_description}
                         </Text>
                       </View>
@@ -109,7 +109,7 @@ export default class HomeScreen extends Component {
                         </View>
                       </View>
                       <View>
-                        <Text style={styles.location}>
+                        <Text style={styles.location} numberOfLines={3}>
                           {job.job_description}
                         </Text>
                       </View>
@@ -205,7 +205,8 @@ const styles = StyleSheet.create({
   },
   location: {
     color: '#777',
-    fontSize: 14
+    fontSize: 14,
+    // height: 40,
   },
   horizontal: {
     padding: 10,

@@ -3,6 +3,7 @@ import { Container, Header, Left, Body, Right, Title, Root } from 'native-base';
 import { StyleSheet } from 'react-native';
 import { AppLoading } from "expo";
 import * as Font from 'expo-font'
+import { Ionicons } from '@expo/vector-icons';
 
 export default class AppHeader extends Component {
   constructor(props) {
@@ -15,7 +16,8 @@ export default class AppHeader extends Component {
         <Header style={styles.header}>
           <Left/>
           <Body>
-            <Title>Employ.me</Title>
+            <Title>
+            <Ionicons name="md-sad" size={16} color="#e30808" />Employ.me</Title>
           </Body>
           <Right />
         </Header>

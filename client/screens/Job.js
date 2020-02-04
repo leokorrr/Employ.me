@@ -9,7 +9,7 @@ export default class WelcomeScreen extends Component {
         super(props);
         this.state = {
             jobs: null,
-            employmeApiLink: 'http://192.168.43.194:5000',
+            employmeApiLink: 'http://192.168.8.102:5000',
             job: 'default',
             jobId: this.props.navigation.getParam('jobId', 'default value'),
             benefits: null,
@@ -159,6 +159,19 @@ export default class WelcomeScreen extends Component {
                                 </Body>
                             </CardItem>
                         </Card>
+                    <Card style={styles.infoCtn}>
+                        <CardItem>
+                            <Body>
+                                <View>
+                                    <Text style={[styles.bold, styles.sectionTitle]}>CONTACT</Text>
+                                    <Text>
+                                        <Text><Text style={styles.bold}>Tel.</Text> {this.state.job.job_telephone}</Text>
+                                    </Text>
+                                    <Text><Text style={styles.bold}>Email.</Text> {this.state.job.job_email}</Text>
+                                </View>
+                            </Body>
+                        </CardItem>
+                    </Card>
                     <TouchableOpacity onPress={this.handlePress} style={[styles.infoCtnFlex]}>
                             <Text style={styles.btn}>Apply</Text>
                         </TouchableOpacity>

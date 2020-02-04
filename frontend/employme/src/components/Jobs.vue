@@ -1,5 +1,25 @@
 <template>
     <div>
+        <div v-if="noResult">
+            <div class="jobs-list">
+                <div class="jobs-list__item">
+                    <div class="job job--noresult">
+                        Nothing was found
+                    </div>
+                </div>
+            </div>
+            <div class="nothing-found-image">
+                <img src="../assets/sad-suffering-crying-emoticon-face.svg" alt="">
+            </div>
+            
+        </div>
+        <ul v-if="jobs && jobs.length" class="jobs-list">
+            <li class="jobs-list__item">
+                 <div class="offers-counter">
+                     <h1 class="job__title"> Offers counter: {{this.jobs.length}} </h1>
+                 </div>
+            </li>
+        </ul>
         <ul v-if="jobs && jobs.length" class="jobs-list">
             <li v-for="(job, index) of jobs" v-bind:key="index" class="jobs-list__item">
                 <router-link v-if="job.job_sponsored" :to="{name: 'job', params: { jobId : job._id }}"  class="job-link">
@@ -31,19 +51,11 @@
                 </router-link>
             </li>
         </ul>
-        <div v-if="noResult">
-            <div class="jobs-list">
-                <div class="jobs-list__item">
-                    <div class="job job--noresult">
-                        Nothing was find :(
-                    </div>
-                </div>
-            </div>
-            
-        </div>
-        <div v-else class="loader-box">
+        <div v-else-if="!noResult" class="loader-box">
             <div class="loader"></div>
         </div>
+        
+        
         <observer  v-on:intersect="intersected" />
     </div>
 </template>
@@ -307,5 +319,26 @@ export default {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+.offers-counter {
+    max-width: 1000px;
+    width: 100%;
+    margin-top: 25px;
+
+    h1 {
+        font-size: 30px;
+    }
+}
+
+.nothing-found-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5%;
+
+    img {
+        width: 85%;
+    }
 }
 </style>

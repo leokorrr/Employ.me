@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Container, Header, Content, Input, Item, Button, Text, ListItem, CheckBox, Body } from 'native-base';
 import { StyleSheet, View, Modal, TouchableHighlight } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
+import HeaderPart from './Header';
 
 export default class WelcomeScreen extends Component {
     constructor(props){
@@ -27,6 +29,7 @@ export default class WelcomeScreen extends Component {
             reqsList: null,
             reqToSend: [],
             modalVisible: false,
+            showFilters: [],
             cbs: [
                 {
                     id: 1,
@@ -92,15 +95,29 @@ export default class WelcomeScreen extends Component {
         }
     }
 
-    static navigationOptions = {
-        title: 'Employ.me',
-        headerStyle: {
-            backgroundColor: "#6c028a",
-        },
-        headerTitleStyle: {
-            color: "white"
-        },
-    }
+
+    // static navigationOptions = {
+    //     headerTitle: () => <HeaderPart></HeaderPart>,
+    //     headerStyle: {
+    //         backgroundColor: "#6c028a",
+    //     },
+    //     headerTitleStyle: {
+    //         color: "white"
+    //     },
+    // }
+
+    static navigationOptions = ({ navigation }) => {
+        return {
+            headerTitle: () => <HeaderPart></HeaderPart>,
+            headerStyle: {
+                backgroundColor: "#6c028a",
+            },
+            headerTitleStyle: {
+                color: "white"
+            },
+        };
+      };
+    
 
     getReqs() {
         let reqsFounded = [];
@@ -125,7 +142,7 @@ export default class WelcomeScreen extends Component {
     sendData = async () => {
         await this.getReqs();
         await this.setData()
-        const url = 'http://192.168.43.194:5000/api/native-jobs';
+        const url = 'http://192.168.8.102:5000/api/native-jobs';
         await fetch(url, {
             method: 'POST',
             headers: {
@@ -155,6 +172,23 @@ export default class WelcomeScreen extends Component {
         this.forceUpdate()
       }
 
+    removeFilters() {
+        for (let i = 0; i < this.state.cbs.length; i++) {
+            this.state.cbs[i].checked = false;
+            this.forceUpdate()
+        }
+    }
+
+    removeEverything() {
+        this.setState({jobTitle: ''})
+        this.setState({salary: ''})
+
+        for (let i = 0; i < this.state.cbs.length; i++) {
+            this.state.cbs[i].checked = false;
+            this.forceUpdate()
+        }
+    }
+
   render() {
 
     this.state.reqsList = this.state.cbs.map((cb, i) => {
@@ -165,21 +199,37 @@ export default class WelcomeScreen extends Component {
             </View>
         )
     })
+
+    this.state.showFilters = this.state.cbs.map((cb, i) => {
+        if (cb.checked) {
+            return (
+                <View key={cb.id}>
+                    <Text style={styles.reqTab}>{cb.title}</Text>
+                </View>
+            )
+        }
+    })
     
     return (
         <Container style={styles.container}>
             <Content>
+                <View style={styles.label}>
+                    <Text style={styles.bold}>Work title:</Text>
+                </View>
                 <Item style={styles.inputCtn}>
                     <Input style={styles.input} 
                         placeholder='Type dreamed work title...' 
                         placeholderTextColor="#777" 
-                        onChangeText={(text) => this.setState({jobTitle: text})}/>
+                        onChangeText={(text) => this.setState({jobTitle: text})} value={this.state.jobTitle} maxLength={200}/>
                 </Item>
+                <View style={styles.label}>
+                    <Text style={styles.bold}>Salary:</Text>
+                </View>
                 <Item style={styles.inputCtn}>
                     <Input style={styles.input} keyboardType={'numeric'}  
                         placeholder='Type dreamed salary...' 
                         placeholderTextColor="#777" 
-                        onChangeText={(number) => this.setState({salary: number})}/>
+                        onChangeText={(number) => this.setState({salary: number})} value={this.state.salary} maxLength={200}/>
                 </Item>
                 <View style={styles.filtersCtn}>
                     <View style={styles.btnCtn}>
@@ -201,12 +251,24 @@ export default class WelcomeScreen extends Component {
                                         {this.state.reqsList}
                                     </View>
                                 </View>
-                                <View style={styles.btnCtn}>
+                                <View style={[styles.btnCtn, styles.btnMargin]}>
+                                    <Button style={styles.btnOutline} onPress={() => {this.removeFilters()}}>
+                                        <Text style={styles.btnText} style={styles.btnTextFilters}>Remove filters</Text>
+                                    </Button>
+                                </View>
+                                <View style={[styles.btnCtn, styles.filterBtnMargin]}>
                                     <Button  style={styles.button} onPress={() => {this.setModalVisible(!this.state.modalVisible); this.sendData(); this.handleSubmit();}}><Text style={styles.btnText}>Search</Text></Button>
                                 </View>
+                                
                             </Content>
                         </Container>
                     </Modal>
+                </View>
+                <View style={styles.appliedFilters}>{this.state.showFilters}</View>
+                <View style={[styles.btnCtn, styles.btnMargin]}>
+                    <Button style={styles.btnOutline} onPress={() => {this.removeEverything()}}>
+                        <Text style={styles.btnText} style={styles.btnTextFilters}>Remove All</Text>
+                    </Button>
                 </View>
                 <View style={styles.btnCtn}>
                     <Button  style={[styles.button, styles.buttonSearchMain]} onPress={() => {this.sendData(); this.handleSubmit();}}><Text style={styles.btnText}>Search</Text></Button>
@@ -226,11 +288,30 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
     },
+    btnMargin: {
+        marginRight: 20,
+        marginLeft: 20,
+        marginBottom: -15
+    },
+    filterBtnMargin: {
+        marginBottom: 20
+    },
     button: {
         marginTop: 40,
-        width: 200,
         height: 60,
+        flex: 1,
+        marginLeft: 20,
+        marginRight: 20,
         backgroundColor: "#6c028a"
+    },
+    appliedFilters: {
+        marginLeft: 20,
+        marginRight: 20,
+        marginTop: 25,
+        marginBottom: -15,
+        flex: 1,
+        flexDirection: 'row',
+        flexWrap: 'wrap'
     },
     buttonSearchMain: {
         marginTop: 60
@@ -244,11 +325,30 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%'
     },
+    label: {
+        marginLeft: 20,
+        marginTop: 30,
+        fontWeight: 'bold'
+    },
     modalHeader: {
         flex:1,
         flexDirection: 'row-reverse',
         paddingTop: 20,
         marginLeft: 20
+    },
+    reqTab: {
+        backgroundColor: '#6c028a',
+        color: '#fff',
+        paddingLeft: 6,
+        paddingRight: 6,
+        paddingTop: 2,
+        paddingBottom: 2,
+        borderRadius: 4,
+        fontSize: 12,
+        textAlign: 'center',
+        alignSelf: 'flex-start',
+        marginRight: 5,
+        marginBottom: 5
     },
     btnCtn: {
         flex: 1,
@@ -281,7 +381,6 @@ const styles = StyleSheet.create({
 
     },
     inputCtn: {
-        marginTop: 30,
         marginLeft: 20,
         marginRight: 20,
         borderRadius: 4,
